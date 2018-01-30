@@ -89,20 +89,18 @@
         overlay.appendChild(descContainer);
          
          //Build controls
-         let previousArrow = `
-         <div class="vb-previousArea">
-             <svg class ="vb-previous"> 
-                 <polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="4" 
-                 fill="none" stroke-linejoin="round"/> 
-             </svg>
-         </div>`;
-         let nextArrow = `
-         <div class="vb-nextArea">
-             <svg class ="vb-next"> 
-                 <polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="4" 
-                 fill="none" stroke-linejoin="round"/>
-             </svg>
-         </div>`;
+         let previousArrow = 
+         '<div class="vb-previousArea">'+
+             '<svg class ="vb-previous"> '+
+                 '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="4" fill="none" stroke-linejoin="round"/> '+
+             '</svg>'+
+         '</div>';
+         let nextArrow =
+         '<div class="vb-nextArea">'+
+             '<svg class ="vb-next">' +
+                 '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
+             '</svg>'
+         '</div>';
          overlay.innerHTML += previousArrow;
          overlay.innerHTML += nextArrow;
 
@@ -128,7 +126,7 @@
 
 
     /**
-     * Another public method
+     * Constructor
      */
     var VanillaBox = function(element,options){
 
@@ -194,7 +192,9 @@
         //
         // Public APIs
         //
-        vanillaBox.showImage = function(index=0){
+    
+        vanillaBox.showImage = function(index){
+            if (!index) index = 0;
             let imageElement = document.createElement('img')
             imageElement.src = images[index];
             currentIndex = index;
@@ -202,7 +202,8 @@
             setImageInContainer(imageContainer, imageElement);
         }
     
-        vanillaBox.open = function(index = 0){
+        vanillaBox.open = function(index){
+            if (!index) index = 0;
             overlay = document.body.appendChild(overlay);
             overlay.classList.remove("fadeOut");            
             overlay.classList.toggle("fadeIn");
