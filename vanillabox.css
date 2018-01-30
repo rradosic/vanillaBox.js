@@ -1,0 +1,115 @@
+.vb-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 100%;
+  height: 100%;
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s;
+}
+
+.fadeOut {
+  animation: fadeOut 0.3s;
+}
+
+.vb-image-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  /* align horizontal */
+  align-items: center;
+  /* align vertical */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vb-image-container > img {
+  max-height: 80%;
+  max-width: 90%;
+}
+
+.vb-arrow {
+  transition: stroke 0.2s ease-in;
+  transform: scale(2);
+}
+
+.vb-previousArea {
+  position: fixed;
+  height: 100%;
+  width: 130px;
+  cursor: pointer;
+  top: 0;
+}
+
+.vb-previousArea:hover > svg > .vb-arrow {
+  stroke: #e6e6e6;
+}
+
+.vb-previous {
+  position: fixed;
+  max-width: 67px;
+  margin-left: 5px;
+  height: 165px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.vb-nextArea {
+  position: fixed;
+  height: 100%;
+  width: 130px;
+  top: 0;
+  cursor: pointer;
+  right: 0;
+}
+
+.vb-nextArea:hover > svg > .vb-arrow {
+  stroke: #e6e6e6;
+}
+
+.vb-next {
+  position: fixed;
+  top: 50%;
+  height: 165px;
+  margin-right: 5px;
+  max-width: 67px;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+@keyframes fadeAndScale {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+/*# sourceMappingURL=vanillabox.css.map */
