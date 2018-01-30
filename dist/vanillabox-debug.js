@@ -75,13 +75,18 @@
     var buildOverlay = function () {
          //Build black overlay
         let overlay = document.createElement('div');
-         overlay.className ="vb-overlay";
+        overlay.className ="vb-overlay";
  
          //Build image container
         let imageContainer = document.createElement('div');
-         imageContainer.className = "vb-image-container";
+        imageContainer.className = "vb-image-container";
          
-         overlay.appendChild(imageContainer);
+        overlay.appendChild(imageContainer);
+
+        let descContainer = document.createElement("div");
+        descContainer.className = "vb-desc-container"
+
+        overlay.appendChild(descContainer);
          
          //Build controls
          let previousArrow = `
@@ -131,6 +136,7 @@
 
         var overlay;
         var imageContainer;
+        var descContainer;
         var nextButton;
         var previousButton;
         var settings;
@@ -147,20 +153,25 @@
             
             var count = 0;
             let ref = this;
-            for (let img of imgElements) {
-                images.push(img.src);
-                captions.push(img.alt);
-                img.dataset.vbIndex = count;
-                img.addEventListener("click",function(){
+            for (let i=0; i<imgElements.length;i++) {
+                let src = imgElements[i].dataset.vbHighRes || imgElements[i].src
+                images.push(src);
+                captions.push(imgElements[i].alt);
+
+                imgElements[i].dataset.vbIndex = count;
+
+                imgElements[i].addEventListener("click",function(){
                     ref.open(this.dataset.vbIndex);
                 })
+                
                 count += 1;
             }
             
             overlay = buildOverlay();
-            imageContainer = overlay.getElementsByClassName("vb-image-container")[0]
-            nextButton = overlay.getElementsByClassName("vb-nextArea")[0]
-            previousButton = overlay.getElementsByClassName("vb-previousArea")[0]
+            imageContainer = overlay.getElementsByClassName("vb-image-container")[0];
+            descContainer = overlay.getElementsByClassName("vb-desc-container")[0];
+            nextButton = overlay.getElementsByClassName("vb-nextArea")[0];
+            previousButton = overlay.getElementsByClassName("vb-previousArea")[0];
 
             overlay.addEventListener("click",function(){               
                 ref.close();
@@ -187,7 +198,7 @@
             let imageElement = document.createElement('img')
             imageElement.src = images[index];
             currentIndex = index;
-
+            descContainer.innerHTML = captions[index];
             setImageInContainer(imageContainer, imageElement);
         }
     

@@ -2,11 +2,21 @@ $overlayColor: #000000;
 $overlayOpacity: 0.9;
 $arrowColor: rgb(230,230,230);
 $controlAreaSize: 130px;
+$descColor: #dbdbdb;
 
 @media only screen 
   and (max-device-width: 480px){
-      $controlAreaSize: 130px;
-  }
+      .vb-desc-container{
+          font-size: 2.5em;
+      }
+}
+
+@media only screen 
+  and (min-device-width: 480px){
+      .vb-desc-container{
+          font-size: 1.5em;
+      }
+}
 
 .vb-overlay{
     position: fixed;
@@ -28,17 +38,34 @@ $controlAreaSize: 130px;
 .vb-image-container{
     position: fixed;
     display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
+    justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    user-select: none;
 }
 
 .vb-image-container > img{
     max-height: 80%;
     max-width: 90%;
+}
+
+.vb-desc-container{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5%;
+    text-align: center;
+    font-family: "Gill Sans", sans-serif;
+    color: rgba($color: $descColor, $alpha: 0.95);
+    vertical-align: middle;
+    background-color: rgba($color: $overlayColor, $alpha: 0.95);
 }
 
 .vb-arrow{

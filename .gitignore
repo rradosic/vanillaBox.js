@@ -1,2 +1,5 @@
 node_modules/
 img/
+src/*.html
+src/*.css
+src/*.map
