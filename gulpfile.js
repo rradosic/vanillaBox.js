@@ -18,7 +18,14 @@ gulp.task('minify-js', function() {
 gulp.task('minify-css', () => {
 return gulp.src('src/*.css')
     .pipe(autoprefixer({
-        browsers: ['last 2 versions'],
+        browsers: [
+            'last 2 versions',
+            'ie 8',
+            'ie 9', 
+            'android 2.3',
+            'android 4',
+            'opera 12'
+           ],
         cascade: false
     }))
     .pipe(cleanCSS({compatibility: 'ie8'}))

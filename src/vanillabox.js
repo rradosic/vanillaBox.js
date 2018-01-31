@@ -91,14 +91,14 @@
          //Build controls
          let previousArrow = 
          '<div class="vb-previousArea">'+
-             '<svg class ="vb-previous"> '+
-                 '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="4" fill="none" stroke-linejoin="round"/> '+
+             '<svg class ="vb-previous" width="35px"> '+
+                 '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> '+
              '</svg>'+
          '</div>';
          let nextArrow =
          '<div class="vb-nextArea">'+
-             '<svg class ="vb-next">' +
-                 '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
+             '<svg class ="vb-next" width="35px">' +
+                 '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>'+
              '</svg>'
          '</div>';
          overlay.innerHTML += previousArrow;
@@ -122,6 +122,37 @@
         console.log("timeout")
         setTimeout(function(){document.body.removeChild(overlay);}, 250);
         
+    };
+
+    var hideControls = function(overlay){
+        overlay.classList.remove("fadeIn");
+        for(var i = 0; i< overlay.children.length;i++){
+            var el = overlay.children[i];
+            if(el.classList.contains("vb-image-container")){
+
+            }
+            else{
+                el.classList.remove("fadeIn");
+                
+                el.classList.add("fadeOut");
+            }
+        }
+    };
+
+    var toggleControls = function(overlay){
+        overlay.classList.remove("fadeIn");
+        for(var i = 0; i< overlay.children.length;i++){
+            var el = overlay.children[i];
+            if(el.classList.contains("vb-image-container")){
+
+            }
+            else{
+                el.classList.toggle("fadeOut");
+                if(el.classList.contains("fadeOut") == false){
+                    el.classList.toggle("fadeIn");            
+                };
+            }
+        }
     };
 
 
@@ -171,8 +202,13 @@
             nextButton = overlay.getElementsByClassName("vb-nextArea")[0];
             previousButton = overlay.getElementsByClassName("vb-previousArea")[0];
 
-            overlay.addEventListener("click",function(){               
-                ref.close();
+            overlay.addEventListener("click",function(e){
+                if(e.target.tagName.toLowerCase() != "img") {
+                    ref.close();
+                }
+                else{
+                    ref.toggleControls();
+                }              
             })
 
             nextButton.addEventListener("click",function(e){   
@@ -214,6 +250,14 @@
 
         vanillaBox.close = function(){
             removeOverlay(overlay);
+        };
+
+        vanillaBox.hideControls = function(){
+            hideControls(overlay);
+        };
+        
+        vanillaBox.toggleControls = function(){
+            toggleControls(overlay);
         };
 
         vanillaBox.nextItem = function(){
