@@ -91,13 +91,13 @@
          //Build controls
          let previousArrow = 
          '<div class="vb-previousArea">'+
-             '<svg class ="vb-previous" width="35px"> '+
+             '<svg class ="vb-previous" width="35px" height="90px"> '+
                  '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> '+
              '</svg>'+
          '</div>';
          let nextArrow =
          '<div class="vb-nextArea">'+
-             '<svg class ="vb-next" width="35px">' +
+             '<svg class ="vb-next" width="35px" height="90px">' +
                  '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>'+
              '</svg>'
          '</div>';
