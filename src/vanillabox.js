@@ -82,26 +82,30 @@
         var descContainer = document.createElement("div");
         descContainer.className = "vb-desc-container";
 
+        var descText = document.createElement("span");
+        descText.className = "vb-desc-text";
+        descContainer.appendChild(descText);
+
         overlay.appendChild(descContainer);
          
          //Build controls
         var previousArrow = 
-        '<div class="vb-previousArea">'+
+        '<div class="vb-previous-area">'+
             '<svg class ="vb-previous" width="35px" height="90px"> '+
                 '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> '+
             '</svg>'+
         '</div>';
         var nextArrow =
-        '<div class="vb-nextArea">'+
+        '<div class="vb-next-area">'+
             '<svg class ="vb-next" width="35px" height="90px">' +
                 '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>'+
             '</svg>'
         '</div>';
         var closeButton =
-        '<div class="vb-closeArea">'+
-            '<svg class ="vb-close" width="30px" height="30px">' +
-                '<polyline class="vb-arrow" points="1,1 29,29" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
-                '<polyline class="vb-arrow" points="29,1 1,29" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
+        '<div class="vb-close-area">'+
+            '<svg class ="vb-close" width="35px" height="35px">' +
+                '<polyline class="vb-x" points="1,1 34,34" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
+                '<polyline class="vb-x" points="34,1 1,34" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
             '</svg>'
             '</div>';
         
@@ -211,8 +215,8 @@
             imageContainer = overlay.getElementsByClassName("vb-image-container")[0];
             descContainer = overlay.getElementsByClassName("vb-desc-container")[0];
             descText = overlay.getElementsByClassName("vb-desc-text")[0];
-            nextButton = overlay.getElementsByClassName("vb-nextArea")[0];
-            previousButton = overlay.getElementsByClassName("vb-previousArea")[0];
+            nextButton = overlay.getElementsByClassName("vb-next-area")[0];
+            previousButton = overlay.getElementsByClassName("vb-previous-area")[0];
 
             overlay.addEventListener("click",function(e){
                 if(e.target.tagName.toLowerCase() != "img") {
@@ -246,7 +250,7 @@
             let imageElement = document.createElement('img')
             imageElement.src = images[index];
             currentIndex = index;
-            descContainer.innerHTML = captions[index];
+            descText.innerHTML = captions[index];
             setImageInContainer(imageContainer, imageElement);
         }
     

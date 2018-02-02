@@ -10,7 +10,7 @@
 * Image captions
 * Multiple galleries per page, each with custom options
 * Responsive design
-	* Looks good on mobile and desktop
+	* Looks great on mobile and desktop
 
 ## Installation
 

@@ -67,10 +67,14 @@ $descColor: #dbdbdb;
     max-height: 20%;
     user-select: none;
     padding: 5px 0;
-    text-align: center;
-    color: rgba($color: $descColor, $alpha: 0.95);
-    vertical-align: middle;
     background-color: rgba($color: $overlayColor, $alpha: 0.5);
+}
+.vb-desc-text{
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px 10%;
+    color: rgba($color: $descColor, $alpha: 0.95);
+    
 }
 
 .vb-arrow{
@@ -79,7 +83,7 @@ $descColor: #dbdbdb;
     display: block;
 }
 
-.vb-previousArea{
+.vb-previous-area{
     position: fixed;
     height: 100%;
     top: 0;
@@ -87,7 +91,7 @@ $descColor: #dbdbdb;
     -webkit-tap-highlight-color: transparent;    
     cursor: pointer;
 }
-.vb-previousArea:hover > svg > .vb-arrow{
+.vb-previous-area:hover > svg > .vb-arrow{
     stroke: rgba($color: $arrowColor, $alpha: 1.0)
 }
 
@@ -101,16 +105,16 @@ $descColor: #dbdbdb;
     transform: translateY(-50%);
 }
 
-.vb-nextArea{
+.vb-next-area{
     position: fixed;
-    height: 90%;
-    top: 10%;
+    height: 95%;
+    top: 5%;
     right: 0;
     width: $controlAreaSize;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
 }
-.vb-nextArea:hover > svg > .vb-arrow{
+.vb-next-area:hover > svg > .vb-arrow{
     stroke: rgba($color: $arrowColor, $alpha: 1.0)
 }
 .vb-next{
@@ -123,17 +127,21 @@ $descColor: #dbdbdb;
     cursor: pointer;
 }
 
-.vb-closeArea{
+.vb-close-area{
     position: fixed;
     top: 2%;
     right: 2%;
 
     cursor: pointer;
 }
-.vb-close{
-
+.vb-x{
+    transition: stroke 0.2s ease-in;
+    
 }
-
+.vb-close:hover > .vb-x{
+    stroke: rgb(230,230,230);
+    
+}
 @keyframes fadeAndScale {
     from{
         opacity: 0;
