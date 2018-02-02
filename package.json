@@ -9,7 +9,8 @@
     "gulp": "git://github.com/gulpjs/gulp.git#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-clean-css": "^3.9.2",
-    "gulp-minify": "^2.1.0"
+    "gulp-minify": "^2.1.0",
+    "gulp-rename": "^1.2.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

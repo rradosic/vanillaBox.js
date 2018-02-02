@@ -1,7 +1,10 @@
+
 var gulp = require('gulp');
 var minifyjs = require('gulp-minify');
 var cleanCSS = require('gulp-clean-css');
 var autoprefixer = require('gulp-autoprefixer');
+var rename = require('gulp-rename');
+
 gulp.task('minify-js', function() {
     return gulp.src('src/*.js')
       .pipe(minifyjs({
@@ -29,5 +32,8 @@ return gulp.src('src/*.css')
         cascade: false
     }))
     .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(rename({suffix:".min"}))
     .pipe(gulp.dest('dist'));
 });
+
+gulp.task('dist', gulp.parallel('minify-css', 'minify-js'));

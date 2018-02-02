@@ -23,6 +23,7 @@ $descColor: #dbdbdb;
     top: 0;
     left: 0;
     background-color: rgba($color: $overlayColor, $alpha: $overlayOpacity);
+    font-family: "Roboto","Gill Sans", sans-serif;
     width: 100%;
     height: 100%;
 }
@@ -67,7 +68,6 @@ $descColor: #dbdbdb;
     user-select: none;
     padding: 5px 0;
     text-align: center;
-    font-family: "Roboto","Gill Sans", sans-serif;
     color: rgba($color: $descColor, $alpha: 0.95);
     vertical-align: middle;
     background-color: rgba($color: $overlayColor, $alpha: 0.5);
@@ -82,9 +82,10 @@ $descColor: #dbdbdb;
 .vb-previousArea{
     position: fixed;
     height: 100%;
-    width: $controlAreaSize;
-    cursor: pointer;
     top: 0;
+    width: $controlAreaSize;
+    -webkit-tap-highlight-color: transparent;    
+    cursor: pointer;
 }
 .vb-previousArea:hover > svg > .vb-arrow{
     stroke: rgba($color: $arrowColor, $alpha: 1.0)
@@ -102,11 +103,12 @@ $descColor: #dbdbdb;
 
 .vb-nextArea{
     position: fixed;
-    height: 100%;
-    width: $controlAreaSize;
-    top: 0;
-    cursor: pointer;
+    height: 90%;
+    top: 10%;
     right: 0;
+    width: $controlAreaSize;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }
 .vb-nextArea:hover > svg > .vb-arrow{
     stroke: rgba($color: $arrowColor, $alpha: 1.0)
@@ -121,6 +123,16 @@ $descColor: #dbdbdb;
     cursor: pointer;
 }
 
+.vb-closeArea{
+    position: fixed;
+    top: 2%;
+    right: 2%;
+
+    cursor: pointer;
+}
+.vb-close{
+
+}
 
 @keyframes fadeAndScale {
     from{

@@ -1,3 +1,4 @@
+//UMD, AMD, CJS
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
 		define([], function () {
@@ -17,11 +18,6 @@
         animation: "",
 
     };
-
-
-    //
-    // Methods
-    //
 
     /**
      * Merge two or more objects. Returns a new object.
@@ -74,37 +70,46 @@
      */
     var buildOverlay = function () {
          //Build black overlay
-        let overlay = document.createElement('div');
+        var overlay = document.createElement('div');
         overlay.className ="vb-overlay";
  
          //Build image container
-        let imageContainer = document.createElement('div');
+        var imageContainer = document.createElement('div');
         imageContainer.className = "vb-image-container";
          
         overlay.appendChild(imageContainer);
 
-        let descContainer = document.createElement("div");
-        descContainer.className = "vb-desc-container"
+        var descContainer = document.createElement("div");
+        descContainer.className = "vb-desc-container";
 
         overlay.appendChild(descContainer);
          
          //Build controls
-         let previousArrow = 
-         '<div class="vb-previousArea">'+
-             '<svg class ="vb-previous" width="35px" height="90px"> '+
-                 '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> '+
-             '</svg>'+
-         '</div>';
-         let nextArrow =
-         '<div class="vb-nextArea">'+
-             '<svg class ="vb-next" width="35px" height="90px">' +
-                 '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>'+
-             '</svg>'
-         '</div>';
-         overlay.innerHTML += previousArrow;
-         overlay.innerHTML += nextArrow;
+        var previousArrow = 
+        '<div class="vb-previousArea">'+
+            '<svg class ="vb-previous" width="35px" height="90px"> '+
+                '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> '+
+            '</svg>'+
+        '</div>';
+        var nextArrow =
+        '<div class="vb-nextArea">'+
+            '<svg class ="vb-next" width="35px" height="90px">' +
+                '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>'+
+            '</svg>'
+        '</div>';
+        var closeButton =
+        '<div class="vb-closeArea">'+
+            '<svg class ="vb-close" width="30px" height="30px">' +
+                '<polyline class="vb-arrow" points="1,1 29,29" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
+                '<polyline class="vb-arrow" points="29,1 1,29" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
+            '</svg>'
+            '</div>';
+        
+        overlay.innerHTML += previousArrow;
+        overlay.innerHTML += nextArrow;
+        overlay.innerHTML += closeButton;
 
-         return overlay;
+        return overlay;
     };
 
    
@@ -147,10 +152,17 @@
 
             }
             else{
-                el.classList.toggle("fadeOut");
-                if(el.classList.contains("fadeOut") == false){
-                    el.classList.toggle("fadeIn");            
-                };
+                if(el.classList.contains("fadeIn")){
+                    el.classList.remove("fadeIn");            
+                    
+                    el.classList.add("fadeOut");           
+                }
+                else if(el.classList.contains("fadeOut")){
+                    el.classList.remove("fadeOut");            
+                    
+                    el.classList.add("fadeIn");            
+                }
+                else el.classList.add("fadeOut");           
             }
         }
     };
@@ -163,12 +175,9 @@
 
         var vanillaBox = {}; // Placeholder for public methods
 
-        var overlay;
-        var imageContainer;
-        var descContainer;
-        var nextButton;
-        var previousButton;
-        var settings;
+        //Reference vars
+        var overlay,imageContainer,descContainer,descText,nextButton,previousButton,settings;
+
         var images = [];
         var captions = [];
         var currentIndex = 0;
@@ -197,8 +206,11 @@
             }
             
             overlay = buildOverlay();
+
+            //Get references to elements
             imageContainer = overlay.getElementsByClassName("vb-image-container")[0];
             descContainer = overlay.getElementsByClassName("vb-desc-container")[0];
+            descText = overlay.getElementsByClassName("vb-desc-text")[0];
             nextButton = overlay.getElementsByClassName("vb-nextArea")[0];
             previousButton = overlay.getElementsByClassName("vb-previousArea")[0];
 
@@ -229,8 +241,8 @@
         // Public APIs
         //
     
-        vanillaBox.showImage = function(index){
-            if (!index) index = 0;
+        vanillaBox.showItem = function(index){
+            if (!index) index = 0; //IE11 default parameter workaround
             let imageElement = document.createElement('img')
             imageElement.src = images[index];
             currentIndex = index;
@@ -239,12 +251,12 @@
         }
     
         vanillaBox.open = function(index){
-            if (!index) index = 0;
+            if (!index) index = 0; //IE11 default parameter workaround 
             overlay = document.body.appendChild(overlay);
             overlay.classList.remove("fadeOut");            
             overlay.classList.toggle("fadeIn");
             imageContainer.innerHTML = "";
-            this.showImage(index);
+            this.showItem(index);
 
         };
 
@@ -266,7 +278,7 @@
             if(currentIndex == images.length){
                 currentIndex = 0;
             }
-            this.showImage(currentIndex);
+            this.showItem(currentIndex);
         };
 
         vanillaBox.previousItem = function(){
@@ -275,7 +287,7 @@
             if(currentIndex < 0){
                 currentIndex = images.length -1;
             }
-            this.showImage(currentIndex);
+            this.showItem(currentIndex);
         };
 
         vanillaBox.init(element, options);
