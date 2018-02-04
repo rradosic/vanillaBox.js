@@ -171,6 +171,17 @@
         }
     };
 
+    var handleTouchGesture = function(startX,endX,ref) {
+        var diff = endX-startX;
+        var tolerance = 100;
+        if(diff>tolerance){
+            ref.previousItem();
+        }
+        else if(diff < -tolerance){
+            ref.nextItem();
+        }
+    };
+
 
     /**
      * Constructor
@@ -218,6 +229,17 @@
             nextButton = overlay.getElementsByClassName("vb-next-area")[0];
             previousButton = overlay.getElementsByClassName("vb-previous-area")[0];
 
+            var startX, endX;
+
+            imageContainer.addEventListener("touchstart", function(e){
+                startX = e.touches[0].clientX;
+            });
+
+            imageContainer.addEventListener("touchend", function(e){
+                endX = e.changedTouches[0].clientX;
+                handleTouchGesture(startX,endX,ref);
+            });
+
             overlay.addEventListener("click",function(e){
                 if(e.target.tagName.toLowerCase() != "img") {
                     ref.close();
@@ -225,7 +247,9 @@
                 else{
                     ref.toggleControls();
                 }              
-            })
+            });
+
+
 
             nextButton.addEventListener("click",function(e){   
                 e.cancelBubble = true;            
