@@ -34,6 +34,7 @@ $descColor: #dbdbdb;
 .fadeOut {
   animation: fadeOut 0.3s;
   animation-fill-mode: forwards;
+  cursor: default!important;
 }
 
 .vb-image-container {
@@ -119,14 +120,12 @@ $descColor: #dbdbdb;
   max-width: 67px;
   right: 2%;
   transform: translateY(-50%);
-  cursor: pointer;
 }
 
 .vb-close-area {
   position: fixed;
   top: 2%;
   right: 2%;
-
   cursor: pointer;
 }
 .vb-x {

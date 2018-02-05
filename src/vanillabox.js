@@ -128,45 +128,40 @@
     var removeOverlay = function (overlay) {
         overlay.classList.remove("fadeIn");
         overlay.classList.toggle("fadeOut");
-        console.log("timeout")
         setTimeout(function () {
             document.body.removeChild(overlay);
         }, 250);
 
     };
 
-    var hideControls = function (overlay) {
+    var setControlsHidden = function (overlay, controlsHidden) {
         overlay.classList.remove("fadeIn");
         for (var i = 0; i < overlay.children.length; i++) {
             var el = overlay.children[i];
-            if (el.classList.contains("vb-image-container")) {
+            if (el.classList.contains("vb-image-container") || el.classList.contains("vb-desc-container")) {
 
             } else {
-                el.classList.remove("fadeIn");
-
-                el.classList.add("fadeOut");
+                if (controlsHidden) {
+                    el.classList.remove("fadeIn");
+                    el.classList.add("fadeOut");
+                } else{
+                    el.classList.remove("fadeOut");
+                    el.classList.add("fadeIn");
+                }
             }
         }
+        return controlsHidden;
     };
 
-    var toggleControls = function (overlay) {
-        overlay.classList.remove("fadeIn");
-        for (var i = 0; i < overlay.children.length; i++) {
-            var el = overlay.children[i];
-            if (el.classList.contains("vb-image-container")) {
+    var hideDescription = function (descContainer) {
+        descContainer.classList.remove("fadeIn");
+        descContainer.classList.add("fadeOut");
 
-            } else {
-                if (el.classList.contains("fadeIn")) {
-                    el.classList.remove("fadeIn");
+    };
 
-                    el.classList.add("fadeOut");
-                } else if (el.classList.contains("fadeOut")) {
-                    el.classList.remove("fadeOut");
-
-                    el.classList.add("fadeIn");
-                } else el.classList.add("fadeOut");
-            }
-        }
+    var showDescription = function (descContainer) {
+        descContainer.classList.remove("fadeOut");
+        descContainer.classList.add("fadeIn");
     };
 
     var handleTouchGesture = function (startX, endX, ref) {
@@ -200,13 +195,14 @@
     var VanillaBox = function (element, options) {
 
         var vanillaBox = {}; // Placeholder for public methods
-
+        var isOpened = false;
         //Reference vars
         var overlay, imageContainer, descContainer, descText, nextButton, previousButton, settings;
 
         var images = [];
         var captions = [];
         var currentIndex = 0;
+        var controlsHidden = false;
 
         vanillaBox.init = function (element, options) {
 
@@ -215,20 +211,17 @@
 
             let imgElements = element.getElementsByTagName("img");
 
-            var count = 0;
             let ref = this;
             for (let i = 0; i < imgElements.length; i++) {
                 let src = imgElements[i].dataset.vbHighRes || imgElements[i].src
                 images.push(src);
-                captions.push(imgElements[i].alt);
+                captions.push(imgElements[i].dataset.vbCaption);
 
-                imgElements[i].dataset.vbIndex = count;
+                imgElements[i].dataset.vbIndex = i;
 
                 imgElements[i].addEventListener("click", function () {
                     ref.open(this.dataset.vbIndex);
                 })
-
-                count += 1;
             }
 
             overlay = buildOverlay();
@@ -262,19 +255,22 @@
                     ref.close();
                 } else {
                     ref.toggleControls();
+
                 }
             });
 
-
-
             nextButton.addEventListener("click", function (e) {
-                e.cancelBubble = true;
-                ref.nextItem();
+                if(!controlsHidden){
+                    e.cancelBubble = true;
+                    ref.nextItem();
+                } 
             })
 
             previousButton.addEventListener("click", function (e) {
-                e.cancelBubble = true;
-                ref.previousItem();
+                if(!controlsHidden){
+                    e.cancelBubble = true;
+                    ref.previousItem();
+                } 
             })
 
             return vanillaBox;
@@ -290,30 +286,51 @@
             let imageElement = document.createElement('img')
             imageElement.src = images[index];
             currentIndex = index;
-            descText.innerHTML = captions[index];
+            if(captions[index]){
+                if (descContainer.classList.contains("fadeOut") && !controlsHidden){
+                    showDescription(descContainer);
+                } 
+                descText.innerHTML = captions[index];
+            }
+            else if(!captions[index] && !isOpened){
+                hideDescription(descContainer);
+                descText.innerHTML = "";
+            }
+            else{
+                hideDescription(descContainer);
+            }
             setImageInContainer(imageContainer, imageElement);
-        }
+        };
 
         vanillaBox.open = function (index) {
             if (!index) index = 0; //IE11 default parameter workaround 
-            overlay = document.body.appendChild(overlay);
+            controlsHidden = setControlsHidden(overlay, false);
             overlay.classList.remove("fadeOut");
-            overlay.classList.toggle("fadeIn");
             imageContainer.innerHTML = "";
             this.showItem(index);
-
+            
+            overlay = document.body.appendChild(overlay);
+            overlay.classList.toggle("fadeIn");
+            isOpened = true;
         };
 
         vanillaBox.close = function () {
             removeOverlay(overlay);
+            isOpened = false;
         };
 
         vanillaBox.hideControls = function () {
-            hideControls(overlay);
+            controlsHidden = setControlsHidden(overlay,true);
+            hideDescription(descContainer);
         };
 
         vanillaBox.toggleControls = function () {
-            toggleControls(overlay);
+            controlsHidden = setControlsHidden(overlay,!controlsHidden);
+            if(controlsHidden){
+                hideDescription(descContainer)
+            } else if(captions[currentIndex]){
+                showDescription(descContainer);
+            } 
         };
 
         vanillaBox.nextItem = function () {
