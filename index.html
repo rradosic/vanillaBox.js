@@ -1,0 +1,140 @@
+<style>
+    body{
+        height: 100%;
+        margin: 0;
+        background-color: #464646;
+
+        font-family: "Roboto",sans-serif;
+    }
+    h1,h3{
+        text-align: center;
+    }
+    code{
+        max-width: 400px;
+        border-radius: 5px;
+        border: 1px dashed rgba(255, 255, 255, 0.486);
+    }
+    hr{
+        border: 0;
+        height: 2px;
+        background:radial-gradient(transparent 30%, rgba(255, 255, 255, 0.5) 35%, transparent 70%);
+    }
+    .header{
+        width: 100%;
+        height: 120px;
+        background-color: #171717;
+        box-shadow: 0 7px 20px #313131;
+    }
+    .footer{
+        width: 100%;
+        height: 120px;
+        background-color: #171717;
+        box-shadow: 0 -7px 20px #313131;
+        color: #d5d5d5;
+    }
+    .flex{
+        display: flex;
+    }
+    .flex-center{
+        justify-content: center;
+        align-items: center;
+    }
+    .logo{
+        max-height: 90px;
+    }
+    .container{
+        width: 100%;
+    }
+    .content{
+        margin: 20px auto;
+        width: 80em;
+        color: #d5d5d5;
+    }
+    .img-container{
+        max-height: 200px;
+        max-width: 250px;
+        overflow: hidden;
+        box-shadow: 0 0 11px 3px #313131;
+        margin: 0 5px;
+        display: inline-block;
+    }
+    .gallery{
+        padding: 15px 15px;
+    }
+    .gallery img{
+    }
+
+</style>
+<html>
+    <head>
+        <title>vanillaBox.js Demo</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script type="text/javascript" src="js/vanillaBox.js"></script>
+        <script src="js/highlight.pack.js"></script>
+
+        <link rel="stylesheet" href="css/vanillabox.css">
+        <link rel="stylesheet" href="css/ocean.css">
+    </head>
+    <body>
+        <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+        <header class="header flex flex-center">
+            <img class="logo" src="img/logo.png" alt="">
+        </header>
+
+        <div class="container flex flex-center">
+            <div class="content">
+                <h1>Default gallery</h1>
+
+                <pre class="flex flex-center"><code class="js">
+let el = document.getElementById('gallery');
+let gallery = new VanillaBox(el);
+                </code></pre>  
+                <div id="vb-one" class="gallery flex flex-center">
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-1.jpeg" data-vb-caption="Green fields" src="img/img d-1.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-2.jpeg" data-vb-caption="Beautiful Gray Island" src="img/img d-2.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-3.jpeg"  src="img/img d-3.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-4.jpeg" data-vb-caption="“Don't cry because it's over, smile because it happened.” "  src="img/img d-4.jpg" ></div>
+                </div>
+                <hr>
+                <h1>No screen controls (swipe or keyboard)</h1>
+                
+                <pre class="flex flex-center"><code class="js">
+let el = document.getElementById('gallery');
+let gallery = new VanillaBox(el,{
+    screenControls:false
+});
+                </code></pre>  
+                <div id="vb-two" class="gallery flex flex-center">
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-1.jpeg" data-vb-caption="" src="img/img c-1.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-2.jpeg" data-vb-caption="" src="img/img c-2.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-3.jpeg"  src="img/img c-3.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-4.jpeg" data-vb-caption=" "  src="img/img c-4.jpg" ></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-5.jpeg" data-vb-caption=""  src="img/img c-5.jpg" ></div>
+                </div>
+                <hr>
+                <h1>Single image</h1>
+                
+                <pre class="flex flex-center"><code class="js">
+let el = document.getElementById('gallery');
+let gallery = new VanillaBox(el);
+                </code></pre>  
+                <div id="vb-three" class="gallery flex flex-center">
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-2.jpeg" data-vb-caption="Beautiful Gray Island" src="img/img d-2.jpg" alt=""></div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer flex flex-center">
+                <h3>Copyright(c) 2018 Robert Radošić</h3>
+            </footer>
+    </body>
+</html>
+
+<script>
+    var gallery = new VanillaBox(document.getElementById("vb-one"));
+    var gallery = new VanillaBox(document.getElementById("vb-two"));
+    var gallery = new VanillaBox(document.getElementById("vb-three"));
+    hljs.initHighlightingOnLoad();
+</script>
