@@ -1,17 +1,17 @@
 //UMD, AMD, CJS
 (function (root, factory) {
-	if ( typeof define === 'function' && define.amd ) {
-		define([], function () {
-			return factory(root);
-		});
-	} else if ( typeof exports === 'object' ) {
-		module.exports = factory(root);
-	} else {
-		root.VanillaBox = factory(root);
-	}
+    if (typeof define === 'function' && define.amd) {
+        define([], function () {
+            return factory(root);
+        });
+    } else if (typeof exports === 'object') {
+        module.exports = factory(root);
+    } else {
+        root.VanillaBox = factory(root);
+    }
 })(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this, function (window) {
 
-	'use strict';
+    'use strict';
 
     // Default settings
     var defaults = {
@@ -35,18 +35,18 @@
         var length = arguments.length;
 
         // Check if a deep merge
-        if ( Object.prototype.toString.call( arguments[0] ) === '[object Boolean]' ) {
+        if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
             deep = arguments[0];
             i++;
         }
 
         // Merge the object into the extended object
         var merge = function (obj) {
-            for ( var prop in obj ) {
-                if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
+            for (var prop in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, prop)) {
                     // If deep merge and property is an object, merge properties
-                    if ( deep && Object.prototype.toString.call(obj[prop]) === '[object Object]' ) {
-                        extended[prop] = extend( true, extended[prop], obj[prop] );
+                    if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+                        extended[prop] = extend(true, extended[prop], obj[prop]);
                     } else {
                         extended[prop] = obj[prop];
                     }
@@ -55,7 +55,7 @@
         };
 
         // Loop through each object and conduct a merge
-        for ( ; i < length; i++ ) {
+        for (; i < length; i++) {
             var obj = arguments[i];
             merge(obj);
         }
@@ -69,42 +69,46 @@
      * @private
      */
     var buildOverlay = function () {
-         //Build black overlay
+        //Build black overlay
         var overlay = document.createElement('div');
-        overlay.className ="vb-overlay";
- 
-         //Build image container
+        overlay.className = "vb-overlay";
+
+        //Build image container
         var imageContainer = document.createElement('div');
         imageContainer.className = "vb-image-container";
-         
+
         overlay.appendChild(imageContainer);
 
         var descContainer = document.createElement("div");
         descContainer.className = "vb-desc-container";
 
+        var descText = document.createElement("span");
+        descText.className = "vb-desc-text";
+        descContainer.appendChild(descText);
+
         overlay.appendChild(descContainer);
-         
-         //Build controls
-        var previousArrow = 
-        '<div class="vb-previousArea">'+
-            '<svg class ="vb-previous" width="35px" height="90px"> '+
-                '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> '+
-            '</svg>'+
-        '</div>';
-        var nextArrow =
-        '<div class="vb-nextArea">'+
-            '<svg class ="vb-next" width="35px" height="90px">' +
-                '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>'+
-            '</svg>'
-        '</div>';
-        var closeButton =
-        '<div class="vb-closeArea">'+
-            '<svg class ="vb-close" width="30px" height="30px">' +
-                '<polyline class="vb-arrow" points="1,1 29,29" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
-                '<polyline class="vb-arrow" points="29,1 1,29" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>'+
-            '</svg>'
+
+        //Build controls
+        var previousArrow =
+            '<div class="vb-previous-area">' +
+            '<svg class ="vb-previous" width="35px" height="90px"> ' +
+            '<polyline class="vb-arrow"  points="30,1 2.5,41 30,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/> ' +
+            '</svg>' +
             '</div>';
-        
+        var nextArrow =
+            '<div class="vb-next-area">' +
+            '<svg class ="vb-next" width="35px" height="90px">' +
+            '<polyline class="vb-arrow" points="1,1 31,41 1,81" stroke="rgba(200,200,200,0.7)" stroke-width="5" fill="none" stroke-linejoin="round"/>' +
+            '</svg>' +
+            '</div>';
+        var closeButton =
+            '<div class="vb-close-area">' +
+            '<svg class ="vb-close" width="35px" height="35px">' +
+            '<polyline class="vb-x" points="1,1 34,34" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>' +
+            '<polyline class="vb-x" points="34,1 1,34" stroke="rgba(200,200,200,0.9)" stroke-width="4" fill="none" stroke-linejoin="round"/>' +
+            '</svg>' +
+            '</div>';
+
         overlay.innerHTML += previousArrow;
         overlay.innerHTML += nextArrow;
         overlay.innerHTML += closeButton;
@@ -112,8 +116,8 @@
         return overlay;
     };
 
-   
-    var setImageInContainer = function(container,img){
+
+    var setImageInContainer = function (container, img) {
         container.innerHTML = "";
 
         img.classList.add('fadeIn');
@@ -121,179 +125,236 @@
         console.log(container);
     };
 
-    var removeOverlay = function(overlay){
+    var removeOverlay = function (overlay) {
         overlay.classList.remove("fadeIn");
         overlay.classList.toggle("fadeOut");
-        console.log("timeout")
-        setTimeout(function(){document.body.removeChild(overlay);}, 250);
-        
+        setTimeout(function () {
+            document.body.removeChild(overlay);
+        }, 250);
+
     };
 
-    var hideControls = function(overlay){
+    var setControlsHidden = function (overlay, controlsHidden) {
         overlay.classList.remove("fadeIn");
-        for(var i = 0; i< overlay.children.length;i++){
+        for (var i = 0; i < overlay.children.length; i++) {
             var el = overlay.children[i];
-            if(el.classList.contains("vb-image-container")){
+            if (el.classList.contains("vb-image-container") || el.classList.contains("vb-desc-container")) {
 
+            } else {
+                if (controlsHidden) {
+                    el.classList.remove("fadeIn");
+                    el.classList.add("fadeOut");
+                } else{
+                    el.classList.remove("fadeOut");
+                    el.classList.add("fadeIn");
+                }
             }
-            else{
-                el.classList.remove("fadeIn");
-                
-                el.classList.add("fadeOut");
-            }
+        }
+        return controlsHidden;
+    };
+
+    var hideDescription = function (descContainer) {
+        descContainer.classList.remove("fadeIn");
+        descContainer.classList.add("fadeOut");
+
+    };
+
+    var showDescription = function (descContainer) {
+        descContainer.classList.remove("fadeOut");
+        descContainer.classList.add("fadeIn");
+    };
+
+    var handleTouchGesture = function (startX, endX, ref) {
+        var diff = endX - startX;
+        var tolerance = 100;
+        if (diff > tolerance) {
+            ref.previousItem();
+        } else if (diff < -tolerance) {
+            ref.nextItem();
         }
     };
 
-    var toggleControls = function(overlay){
-        overlay.classList.remove("fadeIn");
-        for(var i = 0; i< overlay.children.length;i++){
-            var el = overlay.children[i];
-            if(el.classList.contains("vb-image-container")){
-
-            }
-            else{
-                if(el.classList.contains("fadeIn")){
-                    el.classList.remove("fadeIn");            
-                    
-                    el.classList.add("fadeOut");           
-                }
-                else if(el.classList.contains("fadeOut")){
-                    el.classList.remove("fadeOut");            
-                    
-                    el.classList.add("fadeIn");            
-                }
-                else el.classList.add("fadeOut");           
-            }
+    var handleKeyPress = function (key, ref) {
+        switch (key) {
+            case 37:
+                ref.previousItem();
+                break;
+            case 39:
+                ref.previousItem();
+                break;
+            default:
+                return false;
         }
+        return true;
     };
 
 
     /**
      * Constructor
      */
-    var VanillaBox = function(element,options){
+    var VanillaBox = function (element, options) {
 
         var vanillaBox = {}; // Placeholder for public methods
-
+        var isOpened = false;
         //Reference vars
-        var overlay,imageContainer,descContainer,descText,nextButton,previousButton,settings;
+        var overlay, imageContainer, descContainer, descText, nextButton, previousButton, settings;
 
         var images = [];
         var captions = [];
         var currentIndex = 0;
+        var controlsHidden = false;
 
-        vanillaBox.init = function (element, options ) {
+        vanillaBox.init = function (element, options) {
 
             // Merge user options with defaults
-            settings = extend( defaults, options || {} );
-            
+            settings = extend(defaults, options || {});
+
             let imgElements = element.getElementsByTagName("img");
-            
-            var count = 0;
+
             let ref = this;
-            for (let i=0; i<imgElements.length;i++) {
+            for (let i = 0; i < imgElements.length; i++) {
                 let src = imgElements[i].dataset.vbHighRes || imgElements[i].src
                 images.push(src);
-                captions.push(imgElements[i].alt);
+                captions.push(imgElements[i].dataset.vbCaption);
 
-                imgElements[i].dataset.vbIndex = count;
+                imgElements[i].dataset.vbIndex = i;
 
-                imgElements[i].addEventListener("click",function(){
+                imgElements[i].addEventListener("click", function () {
                     ref.open(this.dataset.vbIndex);
                 })
-                
-                count += 1;
             }
-            
+
             overlay = buildOverlay();
 
             //Get references to elements
             imageContainer = overlay.getElementsByClassName("vb-image-container")[0];
             descContainer = overlay.getElementsByClassName("vb-desc-container")[0];
             descText = overlay.getElementsByClassName("vb-desc-text")[0];
-            nextButton = overlay.getElementsByClassName("vb-nextArea")[0];
-            previousButton = overlay.getElementsByClassName("vb-previousArea")[0];
+            nextButton = overlay.getElementsByClassName("vb-next-area")[0];
+            previousButton = overlay.getElementsByClassName("vb-previous-area")[0];
 
-            overlay.addEventListener("click",function(e){
-                if(e.target.tagName.toLowerCase() != "img") {
+            var startX, endX;
+
+            imageContainer.addEventListener("touchstart", function (e) {
+                startX = e.touches[0].clientX;
+            });
+
+            imageContainer.addEventListener("touchend", function (e) {
+                endX = e.changedTouches[0].clientX;
+                handleTouchGesture(startX, endX, ref);
+            });
+
+            imageContainer.addEventListener("keyup", function (e) {
+                var key = e.key;
+                console.log(e)
+                handleKeyPress(key, this);
+            });
+
+            overlay.addEventListener("click", function (e) {
+                if (e.target.tagName.toLowerCase() != "img") {
                     ref.close();
-                }
-                else{
+                } else {
                     ref.toggleControls();
-                }              
+
+                }
+            });
+
+            nextButton.addEventListener("click", function (e) {
+                if(!controlsHidden){
+                    e.cancelBubble = true;
+                    ref.nextItem();
+                } 
             })
 
-            nextButton.addEventListener("click",function(e){   
-                e.cancelBubble = true;            
-                ref.nextItem();
-            })
-
-            previousButton.addEventListener("click",function(e){   
-                e.cancelBubble = true;            
-                ref.previousItem();
+            previousButton.addEventListener("click", function (e) {
+                if(!controlsHidden){
+                    e.cancelBubble = true;
+                    ref.previousItem();
+                } 
             })
 
             return vanillaBox;
         };
-    
-    
+
+
         //
         // Public APIs
         //
-    
-        vanillaBox.showImage = function(index){
+
+        vanillaBox.showItem = function (index) {
             if (!index) index = 0; //IE11 default parameter workaround
             let imageElement = document.createElement('img')
             imageElement.src = images[index];
             currentIndex = index;
-            descContainer.innerHTML = captions[index];
+            if(captions[index]){
+                if (descContainer.classList.contains("fadeOut") && !controlsHidden){
+                    showDescription(descContainer);
+                } 
+                descText.innerHTML = captions[index];
+            }
+            else if(!captions[index] && !isOpened){
+                hideDescription(descContainer);
+                descText.innerHTML = "";
+            }
+            else{
+                hideDescription(descContainer);
+            }
             setImageInContainer(imageContainer, imageElement);
-        }
-    
-        vanillaBox.open = function(index){
+        };
+
+        vanillaBox.open = function (index) {
             if (!index) index = 0; //IE11 default parameter workaround 
-            overlay = document.body.appendChild(overlay);
-            overlay.classList.remove("fadeOut");            
-            overlay.classList.toggle("fadeIn");
+            controlsHidden = setControlsHidden(overlay, false);
+            overlay.classList.remove("fadeOut");
             imageContainer.innerHTML = "";
-            this.showImage(index);
-
+            this.showItem(index);
+            
+            overlay = document.body.appendChild(overlay);
+            overlay.classList.toggle("fadeIn");
+            isOpened = true;
         };
 
-        vanillaBox.close = function(){
+        vanillaBox.close = function () {
             removeOverlay(overlay);
+            isOpened = false;
         };
 
-        vanillaBox.hideControls = function(){
-            hideControls(overlay);
-        };
-        
-        vanillaBox.toggleControls = function(){
-            toggleControls(overlay);
+        vanillaBox.hideControls = function () {
+            controlsHidden = setControlsHidden(overlay,true);
+            hideDescription(descContainer);
         };
 
-        vanillaBox.nextItem = function(){
+        vanillaBox.toggleControls = function () {
+            controlsHidden = setControlsHidden(overlay,!controlsHidden);
+            if(controlsHidden){
+                hideDescription(descContainer)
+            } else if(captions[currentIndex]){
+                showDescription(descContainer);
+            } 
+        };
+
+        vanillaBox.nextItem = function () {
             currentIndex++;
             console.log(currentIndex);
-            if(currentIndex == images.length){
+            if (currentIndex == images.length) {
                 currentIndex = 0;
             }
-            this.showImage(currentIndex);
+            this.showItem(currentIndex);
         };
 
-        vanillaBox.previousItem = function(){
+        vanillaBox.previousItem = function () {
             currentIndex--;
             console.log(currentIndex);
-            if(currentIndex < 0){
-                currentIndex = images.length -1;
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
             }
-            this.showImage(currentIndex);
+            this.showItem(currentIndex);
         };
 
         vanillaBox.init(element, options);
         return vanillaBox;
     }
-    
+
 
     return VanillaBox;
 

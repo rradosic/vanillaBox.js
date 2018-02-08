@@ -4,11 +4,11 @@ $arrowColor: rgb(230, 230, 230);
 $controlAreaSize: 130px;
 $descColor: #dbdbdb;
 
-@media only screen and (max-device-width: 480px) {
-  .vb-desc-container {
-    font-size: 2.5em;
-  }
-}
+// @media only screen and (max-device-width: 480px) {
+//   .vb-desc-container {
+//     font-size: 2em;
+//   }
+// }
 
 @media only screen and (min-device-width: 480px) {
   .vb-desc-container {
@@ -63,6 +63,7 @@ $descColor: #dbdbdb;
   left: 0;
   width: 100%;
   max-height: 20%;
+  font-size: 1.5em;
   user-select: none;
   padding: 5px 0;
   background-color: rgba($color: $overlayColor, $alpha: 0.5);

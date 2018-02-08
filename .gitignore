@@ -3,3 +3,6 @@ img/
 src/*.html
 src/*.css
 src/*.map
+src/css/
+src/js/
+demo/
