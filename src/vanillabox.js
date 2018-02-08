@@ -189,11 +189,12 @@
         };
 
         var handleKeyPress = function(key, ref) {
+            console.log(key);
             switch (key) {
-                case 37:
-                    ref.previousItem();
-                    break;
                 case 39:
+                    ref.nextItem();
+                    break;
+                case 37:
                     ref.previousItem();
                     break;
                 default:
@@ -270,10 +271,11 @@
                     handleTouchGesture(startX, endX, ref);
                 });
 
-                imageContainer.addEventListener("keyup", function(e) {
-                    var key = e.key;
-                    console.log(e);
-                    handleKeyPress(key, this);
+                document.addEventListener("keydown", function(e) {
+                    var key = e.keyCode;
+                    if(isOpened){
+                        handleKeyPress(key, ref);
+                    }
                 });
 
                 overlay.addEventListener("click", function(e) {
