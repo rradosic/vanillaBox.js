@@ -19,6 +19,18 @@
         height: 2px;
         background:radial-gradient(transparent 30%, rgba(255, 255, 255, 0.5) 35%, transparent 70%);
     }
+    .open-gallery-btn{
+        margin: 20px 0;
+        border-radius: 5px;
+        border: 1.5px solid #171717;
+        background-color: #606060;
+        color: d5d5d5;
+        font-size: medium;
+        width: 100px;
+        height: 50px;
+        box-shadow: 0 0 11px 3px #313131;
+        cursor: pointer;
+    }
     .header{
         width: 100%;
         height: 120px;
@@ -134,13 +146,37 @@ let gallery = new VanillaBox(el,{
                     <div class="img-container"><img data-vb-high-res="img/high_res/img c-5.jpeg" data-vb-caption=""  src="img/img c-5.jpg" ></div>
                 </div>
                 <hr>
+                <h1>Disable looping and opening on thumbnail click</h1>
+                
+                <pre class="flex flex-center"><code class="js">
+let el = document.getElementById('gallery');
+let gallery = new VanillaBox(el,{
+    loop: false,
+    imageListeners: false,
+});
+
+btn.addEventListener("click", function(){
+    gallery.open();
+});
+                </code></pre>  
+                <div class="flex flex-center">
+                    <button id="open-gallery" class="open-gallery-btn">Open gallery</button>
+                </div>
+                <div id="vb-three" class="gallery flex flex-center">
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-2.jpeg" data-vb-caption="" src="img/img d-2.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-2.jpeg" data-vb-caption="" src="img/img c-2.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-1.jpeg"  src="img/img c-1.jpg" alt=""></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img d-4.jpeg" data-vb-caption=" "  src="img/img d-4.jpg" ></div>
+                    <div class="img-container"><img data-vb-high-res="img/high_res/img c-5.jpeg" data-vb-caption=""  src="img/img c-5.jpg" ></div>
+                </div>
+                <hr>
                 <h1>Single image</h1>
                 
                 <pre class="flex flex-center"><code class="js">
 let el = document.getElementById('gallery');
 let gallery = new VanillaBox(el);
                 </code></pre>  
-                <div id="vb-three" class="gallery flex flex-center">
+                <div id="vb-four" class="gallery flex flex-center">
                     <div class="img-container"><img data-vb-high-res="img/high_res/img d-2.jpeg" data-vb-caption="Beautiful Gray Island" src="img/img d-2.jpg" alt=""></div>
                 </div>
             </div>
@@ -154,6 +190,16 @@ let gallery = new VanillaBox(el);
 <script>
     var gallery = new VanillaBox(document.getElementById("vb-one"));
     var gallery2 = new VanillaBox(document.getElementById("vb-two"),{screenControls:false});
-    var gallery3 = new VanillaBox(document.getElementById("vb-three"));
+    var gallery3 = new VanillaBox(document.getElementById("vb-three"),{
+        loop:false,
+        imageListeners: false,
+    });
+    var gallery4 = new VanillaBox(document.getElementById("vb-four"));
+
+    var btn = document.getElementById("open-gallery");
+    btn.addEventListener("click", function(){
+        gallery3.open();
+    });
+
     hljs.initHighlightingOnLoad();
 </script>
