@@ -19,7 +19,8 @@
         // Default settings
         var defaults = {
             animation: "",
-            screenControls: true
+            imageListeners: true,
+            screenControls: true,
         };
 
         /**
@@ -136,7 +137,6 @@
 
             img.classList.add("fadeIn");
             container.appendChild(img);
-            console.log(container);
         };
 
         var removeOverlay = function(overlay) {
@@ -180,7 +180,6 @@
         var handleTouchGesture = function(startX, endX, ref) {
             var diff = endX - startX;
             var tolerance = 70;
-            console.log(diff);
             if (diff > tolerance) {
                 ref.previousItem();
             } else if (diff < -tolerance) {
@@ -189,7 +188,6 @@
         };
 
         var handleKeyPress = function(key, ref) {
-            console.log(key);
             switch (key) {
                 case 39:
                     ref.nextItem();
@@ -197,15 +195,16 @@
                 case 37:
                     ref.previousItem();
                     break;
+                case 27:
+                    ref.close();
+                    break;
                 default:
                     return false;
             }
             return true;
         };
 
-        /**
-         * Constructor
-         */
+        //Constructor
         var VanillaBox = function(element, options) {
             var vanillaBox = {}; // Placeholder for public methods
             var isOpened = false;
@@ -227,20 +226,24 @@
                 // Merge user options with defaults
                 settings = extend(defaults, options || {});
 
-                let imgElements = element.getElementsByTagName("img");
+                var imgElements = element.getElementsByTagName("img");
 
-                let ref = this;
-                for (let i = 0; i < imgElements.length; i++) {
-                    let src =
+                var ref = this;
+                for (var i = 0; i < imgElements.length; i++) {
+                    var src =
                         imgElements[i].dataset.vbHighRes || imgElements[i].src;
                     images.push(src);
                     captions.push(imgElements[i].dataset.vbCaption);
 
                     imgElements[i].dataset.vbIndex = i;
 
-                    imgElements[i].addEventListener("click", function() {
-                        ref.open(this.dataset.vbIndex);
-                    });
+                    if(settings.imageListeners){
+                        imgElements[i].addEventListener("click", function() {
+                            currentIndex = null;
+                            ref.open(this.dataset.vbIndex);
+                        });
+                    }
+                    
                 }
                 if (imgElements.length <= 1) {
                     settings.screenControls = false;
@@ -262,6 +265,7 @@
 
                 var startX, endX;
 
+                //Bind listeners
                 overlay.addEventListener("touchstart", function(e) {
                     startX = e.touches[0].clientX;
                 });
@@ -273,7 +277,7 @@
 
                 document.addEventListener("keydown", function(e) {
                     var key = e.keyCode;
-                    if(isOpened){
+                    if (isOpened) {
                         handleKeyPress(key, ref);
                     }
                 });
@@ -367,23 +371,29 @@
                     hideDescription(descContainer);
                 } else if (captions[currentIndex]) {
                     showDescription(descContainer);
-                }
+                };
             };
 
             vanillaBox.nextItem = function() {
-                var nextIndex = currentIndex + 1;
-                if (nextIndex == images.length) {
-                    nextIndex = 0;
-                }
-                this.showItem(nextIndex);
+                if(images.length){
+                    var nextIndex = currentIndex + 1;
+                    if (nextIndex == images.length) {
+                        nextIndex = 0;
+                    }
+                    this.showItem(nextIndex);
+                };
+                
             };
 
             vanillaBox.previousItem = function() {
-                var prevIndex = currentIndex - 1;
-                if (prevIndex < 0) {
-                    prevIndex = images.length - 1;
-                }
-                this.showItem(prevIndex);
+                if(images.length){
+                    var prevIndex = currentIndex - 1;
+                    if (prevIndex < 0) {
+                        prevIndex = images.length - 1;
+                    }
+                    this.showItem(prevIndex);
+                };
+                
             };
 
             vanillaBox.init(element, options);
