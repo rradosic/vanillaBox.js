@@ -1,4 +1,7 @@
-<h1 align="center">vanillaBox.js</h1>
+<h1 align="center">
+
+![vanillaBox logo](https://raw.githubusercontent.com/rradosic/vanillaBox.js/gh-pages/img/logo_alt.png?token=AiS5kei6L5-SjQsxPDwvAg9jYA5zFWdCks5ahp-kwA%3D%3D)
+</h1>
 
 > Simple lightbox plugin written in pure javascript with no dependencies
 

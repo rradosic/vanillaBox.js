@@ -20,6 +20,7 @@
         var defaults = {
             animation: "",
             imageListeners: true,
+            loop: true,
             screenControls: true,
         };
 
@@ -189,13 +190,13 @@
 
         var handleKeyPress = function(key, ref) {
             switch (key) {
-                case 39:
+                case 39:    //Right Arrow
                     ref.nextItem();
                     break;
-                case 37:
+                case 37:    //Left Arrow
                     ref.previousItem();
                     break;
-                case 27:
+                case 27:    //Esc Key
                     ref.close();
                     break;
                 default:
@@ -377,8 +378,11 @@
             vanillaBox.nextItem = function() {
                 if(images.length){
                     var nextIndex = currentIndex + 1;
-                    if (nextIndex == images.length) {
+                    if (nextIndex == images.length && settings.loop) {
                         nextIndex = 0;
+                    }
+                    else if(nextIndex == images.length){
+                        nextIndex = currentIndex;
                     }
                     this.showItem(nextIndex);
                 };
@@ -388,8 +392,11 @@
             vanillaBox.previousItem = function() {
                 if(images.length){
                     var prevIndex = currentIndex - 1;
-                    if (prevIndex < 0) {
-                        prevIndex = images.length - 1;
+                    if (prevIndex < 0 && settings.loop) {
+                        prevIndex = images.length;
+                    }
+                    else if(prevIndex < 0){
+                        prevIndex = currentIndex;
                     }
                     this.showItem(prevIndex);
                 };
